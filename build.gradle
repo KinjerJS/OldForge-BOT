@@ -1,0 +1,38 @@
+apply plugin: 'java'
+apply plugin: 'eclipse'
+apply plugin: 'maven-publish'
+
+group = 're.alwyn974.oldforge.bot'
+version = '1.0.5'
+archivesBaseName = 'OldForge-BOT'
+
+sourceCompatibility = 1.8
+targetCompatibility = 1.8
+
+compileJava.options.encoding = 'UTF-8'
+
+repositories {
+    mavenCentral()
+     flatDir {
+       dirs 'librairies'
+   }
+}
+
+dependencies {
+	compile 're.alwyn974.logger:logger:1.0.0'
+	compile 'net.dv8tion:JDA:4.1.1_101'
+	compile 'org.reflections:reflections:0.9.11'
+	compile 'com.google.gson:gson:2.3.1'
+}
+
+jar {
+	manifest {
+        attributes 'Main-Class' : 're.alwyn974.oldforge.bot.OldForgeBOT'
+    }
+    from "LICENSE.MD"
+    from {
+    	configurations.compile.collect {
+    		it.isDirectory() ? it : zipTree(it)
+    	}
+    }
+}
