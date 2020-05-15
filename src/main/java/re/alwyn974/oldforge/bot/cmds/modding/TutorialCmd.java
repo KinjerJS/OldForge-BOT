@@ -28,8 +28,8 @@ import re.alwyn974.oldforge.bot.cmds.utils.Command;
  * Tutorial Command
  * 
  * @author <a href="https://github.com/alwyn974"> Alwyn974</a>
- * @version 1.0.3
- * @since 1.0.0
+ * @version 1.0.6
+ * @since 1.0.3
  */
 public class TutorialCmd extends Command {
 
@@ -98,20 +98,31 @@ public class TutorialCmd extends Command {
 				EmbedBuilder builder = embed();
 				builder.setTitle("Liste des tutoriels correspondants à votre recherche : ");
 				ArrayList<String> fieldsName = new ArrayList<String>();
-
+				
 				obj.entrySet().forEach(o -> {
 					if (o.getKey().equals("none") && o.getValue().getAsJsonArray().size() == 0)
 						return;
 					JsonArray arrays = o.getValue().getAsJsonArray();
 					fieldsName.add(o.getKey());
 					StringBuilder strBuilder = new StringBuilder();
+					StringBuilder tooMuch = new StringBuilder();
 					int size = 0;
 					for (JsonElement array : arrays) {
 						ForgeTutorial tuto = new Gson().fromJson(array.getAsJsonObject(), ForgeTutorial.class);
-						size++;
-						strBuilder.append(String.format("[%s](%s)", tuto.getTitle(), tuto.getUrl()));
-						strBuilder.append(size != arrays.size() ? "\n" : "");
+						String field = String.format("[%s](%s)", tuto.getTitle(), tuto.getUrl());
+						if ((strBuilder.length() + field.length()) >= 1024) {
+							tooMuch.append(field);
+							size++;
+							tooMuch.append(size != arrays.size() ? "\n" : "");
+						} else {
+							strBuilder.append(field);
+							size++;
+							strBuilder.append(size != arrays.size() ? "\n" : "");
+						}
 					}
+					if (tooMuch.length() > 0)
+						builder.addField(o.getKey(), tooMuch.toString(), false);
+					
 					builder.addField(o.getKey(), strBuilder.toString(), false);
 				});
 

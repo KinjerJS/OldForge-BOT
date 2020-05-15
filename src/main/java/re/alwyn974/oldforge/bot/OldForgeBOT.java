@@ -26,14 +26,14 @@ import re.alwyn974.oldforge.bot.cmds.utils.CommandManager;
  * Main class of the bot
  * 
  * @author <a href="https://github.com/alwyn974"> Alwyn974</a>
- * @version 1.0.3
+ * @version 1.0.6
  * @since 1.0.0
  */
 public class OldForgeBOT extends ListenerAdapter {
 
 	private static JDA jda;
 	private static final String TOKEN = "TOKEN";
-	private static final String VERSION = "v1.0.5";
+	private static final String VERSION = "v1.0.6";
 	private static String gameActivity = "!help | " + VERSION;
 	private static final String BOTNAME = "Modding Forge à l'ancienne";
 	private static OldForgeBOT instance;
@@ -139,5 +139,5 @@ public class OldForgeBOT extends ListenerAdapter {
 			new CommandManager().exec(chan, sender, message, msg);
 		}
 	}
-
+	
 }
