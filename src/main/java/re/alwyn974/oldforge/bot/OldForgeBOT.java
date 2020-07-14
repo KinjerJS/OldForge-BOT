@@ -21,19 +21,20 @@ import re.alwyn974.logger.BasicLogger;
 import re.alwyn974.logger.LoggerFactory;
 import re.alwyn974.oldforge.bot.cmds.utils.Command;
 import re.alwyn974.oldforge.bot.cmds.utils.CommandManager;
+import re.alwyn974.oldforge.bot.handler.AutoHastebinHandler;
 
 /**
  * Main class of the bot
  * 
  * @author <a href="https://github.com/alwyn974"> Alwyn974</a>
- * @version 1.0.6
+ * @version 1.0.7
  * @since 1.0.0
  */
 public class OldForgeBOT extends ListenerAdapter {
 
 	private static JDA jda;
 	private static final String TOKEN = "TOKEN";
-	private static final String VERSION = "v1.0.6";
+	private static final String VERSION = "v1.0.7";
 	private static String gameActivity = "!help | " + VERSION;
 	private static final String BOTNAME = "Modding Forge à l'ancienne";
 	private static OldForgeBOT instance;
@@ -137,6 +138,7 @@ public class OldForgeBOT extends ListenerAdapter {
 			Message msg = e.getMessage();
 			String message = e.getMessage().getContentRaw();
 			new CommandManager().exec(chan, sender, message, msg);
+			new AutoHastebinHandler().handleMessage(chan, msg, sender);
 		}
 	}
 	
