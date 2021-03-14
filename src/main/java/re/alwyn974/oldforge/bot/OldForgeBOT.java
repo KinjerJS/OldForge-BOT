@@ -27,7 +27,7 @@ import re.alwyn974.oldforge.bot.handler.AutoHastebinHandler;
  * Main class of the bot
  * 
  * @author <a href="https://github.com/alwyn974"> Alwyn974</a>
- * @version 1.0.7
+ * @version 1.0.8
  * @since 1.0.0
  */
 public class OldForgeBOT extends ListenerAdapter {
@@ -42,7 +42,7 @@ public class OldForgeBOT extends ListenerAdapter {
 	private static final BasicLogger LOGGER = LoggerFactory.getLogger("OldForge-BOT");
 
 	public static void main(String[] args) throws InterruptedException, LoginException {
-		jda = new JDABuilder(AccountType.BOT).setToken(TOKEN).build();
+		jda = JDABuilder.createDefault(TOKEN).build();
 		jda.getPresence().setStatus(OnlineStatus.ONLINE);
 		jda.getPresence().setActivity(Activity.playing(gameActivity));
 		jda.addEventListener(instance = new OldForgeBOT());
@@ -61,9 +61,7 @@ public class OldForgeBOT extends ListenerAdapter {
 
 		i("===============Guilds================");
 		jda.getGuilds().forEach(g -> {
-			g.getSelfMember().getRoles().forEach(r -> {
-				i("Guild : %s Permissions : %s with role : %s", g, r.getPermissions(), r.getName());
-			});
+			g.getSelfMember().getRoles().forEach(r -> i("Guild : %s Permissions : %s with role : %s", g, r.getPermissions(), r.getName()));
 		});
 		i("===============COMMANDS================");
 

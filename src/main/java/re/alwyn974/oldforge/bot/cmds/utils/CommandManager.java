@@ -23,14 +23,14 @@ import re.alwyn974.oldforge.bot.OldForgeBOT;
  * Manager of all commands
  * 
  * @author <a href="https://github.com/alwyn974"> Alwyn974</a>
- * @version 1.0.0
+ * @version 1.0.8
  * @since 1.0.0
  */
 public class CommandManager {
 
-	private static HashMap<String, Command> commands = new HashMap<>();
+	private static final HashMap<String, Command> commands = new HashMap<>();
 	private static final HashMap<String, Command> commandsAlias = new HashMap<>();
-	private static List<Command> cmds = new ArrayList<Command>();
+	private static final List<Command> cmds = new ArrayList<Command>();
 
 	/**
 	 * Register any commands
@@ -64,11 +64,8 @@ public class CommandManager {
 			if (command != null) {
 				final String[] cmdArgs = new String[args.length - 1];
 
-				for (int i = 0; i < cmdArgs.length; i++) {
-					cmdArgs[i] = args[i + 1];
-				}
-
-				if (chan.getGuild().getMember(sender).hasPermission(command.getPermission()) || sender.getId().equals("249107964336537600")) {
+				System.arraycopy(args, 1, cmdArgs, 0, cmdArgs.length);
+				if (msg.getMember().hasPermission(command.getPermission()) || sender.getId().equals("249107964336537600")) {
 					command.execute(chan, sender, cmdArgs, msg);
 					i("=======================================");
 					i("User : %s | %s", sender.getAsTag(), sender.getId());
