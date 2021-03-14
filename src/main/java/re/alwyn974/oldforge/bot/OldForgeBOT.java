@@ -34,7 +34,7 @@ public class OldForgeBOT extends ListenerAdapter {
 
 	private static JDA jda;
 	private static final String TOKEN = "TOKEN";
-	private static final String VERSION = "v1.0.7";
+	private static final String VERSION = "v1.0.8";
 	private static String gameActivity = "!help | " + VERSION;
 	private static final String BOTNAME = "Modding Forge à l'ancienne";
 	private static OldForgeBOT instance;
