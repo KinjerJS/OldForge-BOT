@@ -28,7 +28,7 @@ public class EventsCmd implements Command {
 
 	@Override
 	public void execute(SlashCommandInteractionEvent event) {
-		OptionMapping option = event.getOption("text");
+		OptionMapping option = event.getOption("name");
 		String url = "https://minecraftforgefrance.fr/";
 
 		HttpsURLConnection connection;
