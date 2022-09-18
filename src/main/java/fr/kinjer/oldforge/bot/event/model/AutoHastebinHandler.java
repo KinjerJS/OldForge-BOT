@@ -9,6 +9,7 @@ import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.nio.charset.Charset;
+import java.nio.charset.StandardCharsets;
 import java.time.OffsetDateTime;
 import java.util.Arrays;
 import java.util.HashSet;
@@ -25,6 +26,7 @@ import fr.kinjer.oldforge.bot.OldForgeBOT;
 import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.entities.*;
 import net.dv8tion.jda.api.entities.Message.Attachment;
+import net.dv8tion.jda.api.entities.channel.middleman.MessageChannel;
 import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
 import net.dv8tion.jda.api.hooks.ListenerAdapter;
 import org.jetbrains.annotations.NotNull;
@@ -98,7 +100,7 @@ public class AutoHastebinHandler extends ListenerAdapter {
 	}
 	
 	private String sendPostRequest(String text) throws IOException  {
-		byte[] textBytes = text.getBytes("UTF-8");
+		byte[] textBytes = text.getBytes(StandardCharsets.UTF_8);
 		URL serverURL = new URL("https://code.alwyn974.re/documents?");
 		HttpURLConnection connection = (HttpURLConnection) serverURL.openConnection();
         connection.setRequestMethod("POST");
@@ -113,10 +115,10 @@ public class AutoHastebinHandler extends ListenerAdapter {
         wr.close();
         connection.connect();
         
-        BufferedReader br = new BufferedReader(new InputStreamReader(connection.getInputStream(), Charset.forName("UTF-8")));
+        BufferedReader br = new BufferedReader(new InputStreamReader(connection.getInputStream(), StandardCharsets.UTF_8));
         String response = br.readLine();
         if (response.startsWith("{")) {
-        	JsonElement element = new JsonParser().parse(response);
+        	JsonElement element = JsonParser.parseString(response);
 			JsonObject obj = element.getAsJsonObject();
 			if (obj.get("key") != null)
 				return obj.get("key").getAsString();

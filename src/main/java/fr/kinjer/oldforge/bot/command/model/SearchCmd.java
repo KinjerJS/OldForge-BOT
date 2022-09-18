@@ -13,17 +13,17 @@ public class SearchCmd implements Command {
 
 	@Override
 	public void execute(SlashCommandInteractionEvent event) {
-		OptionMapping option = event.getOption("text");
+		OptionMapping option = event.getOption("name");
 
 		if(option != null) {
-			event.reply("https://lmgtfy.com/?q=" + option.getAsString()).queue();
+			event.reply("https://lmgtfy.com/?q=" + option.getAsString().replace(" ", "%20")).queue();
 		}
 	}
 
 	@Override
 	public SlashCommandData getData() {
 		return new CommandDataImpl("search", "Permet d'effectuer une recherche.")
-				.addOption(OptionType.STRING, "text", "Texte à rechercher", true);
+				.addOption(OptionType.STRING, "name", "Texte à rechercher", true);
 	}
 
 	@Override

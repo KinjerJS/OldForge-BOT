@@ -37,7 +37,7 @@ public class EventsCmd implements Command {
 		try {
 			if(option == null)
 				throw new NullPointerException("L'option name est vide");
-			connection = (HttpsURLConnection) new URL(url + "discordapi/forgeevents?term=" + option.getAsString()).openConnection();
+			connection = (HttpsURLConnection) new URL(url + "discordapi/forgeevents?term=" + option.getAsString().replace(" ", "%20")).openConnection();
 			connection.setRequestProperty("User-Agent", "Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.11 (KHTML, like Gecko) Chrome/23.0.1271.95 Safari/537.11");
 			connection.connect();
 			reader = new BufferedReader(new InputStreamReader(connection.getInputStream(), StandardCharsets.UTF_8));

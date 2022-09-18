@@ -36,7 +36,7 @@ public class TutorialCmd implements Command {
 		String tutorialVersion = "";
 
 		if (optionVersion != null) {
-			tutorialVersion = "&hasTags[]=" + optionVersion.getAsString() + 2;
+			tutorialVersion = "&hasTags[]=" + optionVersion.getAsString().replace(" ", "%20") + 2;
 		}
 
 		HttpsURLConnection connection;
@@ -45,7 +45,7 @@ public class TutorialCmd implements Command {
 		try {
 			if(optionName == null)
 				throw new NullPointerException("L'option name est vide");
-			connection = (HttpsURLConnection) new URL(url + optionName.getAsString() + tutorialVersion).openConnection();
+			connection = (HttpsURLConnection) new URL(url + optionName.getAsString().replace(" ", "%20") + tutorialVersion).openConnection();
 			connection.setRequestProperty("User-Agent", "Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.11 (KHTML, like Gecko) Chrome/23.0.1271.95 Safari/537.11");
 			connection.connect();
 			reader = new BufferedReader(new InputStreamReader(connection.getInputStream(), StandardCharsets.UTF_8));
@@ -54,7 +54,7 @@ public class TutorialCmd implements Command {
 			OldForgeBOT.e("Erreur : ", e);
 		}
 
-		JsonElement element = new JsonParser().parse(json);
+		JsonElement element = JsonParser.parseString(json);
 		JsonObject obj = element.getAsJsonObject();
 
 		if (obj.get("message") != null)
